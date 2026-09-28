@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Windows 11 (Fluent) design tokens: every theme is a set of RGB triplets ---- */
+:root, [data-theme='light'] {
+  --bg: 243 243 243; --layer: 255 255 255; --layer2: 249 249 249; --stroke: 224 224 224; --fg: 26 26 26; --muted: 96 96 96;
+  --accent: 0 103 192; --accent-fg: 255 255 255; --danger: 196 43 28; --warn: 157 93 0; --ok: 15 123 15; --info: 0 103 192;
+  --mica: linear-gradient(135deg, rgb(243 243 243), rgb(232 240 250)); color-scheme: light;
+}
+[data-theme='dark'] {
+  --bg: 32 32 32; --layer: 43 43 43; --layer2: 50 50 50; --stroke: 66 66 66; --fg: 255 255 255; --muted: 176 176 176;
+  --accent: 96 205 255; --accent-fg: 0 0 0; --danger: 255 153 164; --warn: 252 225 0; --ok: 108 203 95; --info: 96 205 255;
+  --mica: linear-gradient(135deg, rgb(32 32 32), rgb(28 36 48)); color-scheme: dark;
+}
+[data-theme='amoled'] {
+  --bg: 0 0 0; --layer: 14 14 14; --layer2: 22 22 22; --stroke: 48 48 48; --fg: 255 255 255; --muted: 170 170 170;
+  --accent: 96 205 255; --accent-fg: 0 0 0; --danger: 255 153 164; --warn: 252 225 0; --ok: 108 203 95; --info: 96 205 255;
+  --mica: #000; color-scheme: dark;
+}
+[data-theme='red'] {
+  --bg: 32 16 18; --layer: 46 24 26; --layer2: 56 30 32; --stroke: 92 48 52; --fg: 255 240 240; --muted: 214 170 172;
+  --accent: 255 99 99; --accent-fg: 32 0 0; --danger: 255 170 170; --warn: 255 200 87; --ok: 130 214 130; --info: 255 140 140;
+  --mica: linear-gradient(135deg, rgb(32 16 18), rgb(52 20 24)); color-scheme: dark;
+}
+[data-theme='blue'] {
+  --bg: 12 24 44; --layer: 18 34 60; --layer2: 24 44 76; --stroke: 42 74 118; --fg: 236 244 255; --muted: 158 186 222;
+  --accent: 76 194 255; --accent-fg: 0 16 32; --danger: 255 153 164; --warn: 252 225 0; --ok: 108 203 95; --info: 76 194 255;
+  --mica: linear-gradient(135deg, rgb(12 24 44), rgb(10 40 78)); color-scheme: dark;
+}
+
+html, body { height: 100%; }
+body { background: rgb(var(--bg)); background-image: var(--mica); background-attachment: fixed; color: rgb(var(--fg)); font-family: theme('fontFamily.sans'); font-size: 14px; }
+* { scrollbar-width: thin; scrollbar-color: rgb(var(--stroke)) transparent; }
+::selection { background: rgb(var(--accent) / .35); }
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 1px; border-radius: 4px; }
+
+/* RTL: text + layout mirror automatically through logical utilities; code and diagrams stay LTR. */
+[dir='rtl'] body { font-family: Vazirmatn, 'Segoe UI Variable Text', 'Segoe UI', Tahoma, sans-serif; }
+.ltr, .cm-editor, pre, code, .react-flow { direction: ltr; unicode-bidi: plaintext; }
+[dir='rtl'] .flip-rtl { transform: scaleX(-1); }
+
+/* Fluent surfaces */
+.mica { background: rgb(var(--bg) / .72); backdrop-filter: blur(24px) saturate(1.4); }
+.acrylic { background: rgb(var(--layer) / .82); backdrop-filter: blur(30px) saturate(1.6); }
+.win-card { background: rgb(var(--layer)); border: 1px solid rgb(var(--stroke)); border-radius: 8px; box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
+.win-input { background: rgb(var(--layer2)); border: 1px solid rgb(var(--stroke)); border-bottom-color: rgb(var(--muted) / .7); border-radius: 4px; padding: 5px 10px; min-height: 32px; color: inherit; width: 100%; }
+.win-input:focus { border-bottom: 2px solid rgb(var(--accent)); outline: none; }
+.react-flow__node { font-family: inherit; }
+.react-flow__attribution { display: none; }
+.cm-editor { height: 100%; font-size: 13px; background: rgb(var(--layer)) !important; color: rgb(var(--fg)) !important; }
+.cm-gutters { background: rgb(var(--layer2)) !important; color: rgb(var(--muted)) !important; border: none !important; }
+.cm-activeLine, .cm-activeLineGutter { background: rgb(var(--accent) / .08) !important; }
+.tok-kw { color: rgb(var(--accent)); font-weight: 600; } .tok-type { color: rgb(var(--info)); } .tok-str { color: rgb(var(--ok)); }
+.tok-num { color: rgb(var(--warn)); } .tok-cmt { color: rgb(var(--muted)); font-style: italic; } .tok-op { color: rgb(var(--danger)); }
+.split-handle { background: rgb(var(--stroke)); } .split-handle:hover, .split-handle[data-active='true'] { background: rgb(var(--accent)); }
+@keyframes fluent-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.fluent-in { animation: fluent-in .22s cubic-bezier(.16,1,.3,1); }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
