@@ -1,0 +1,1110 @@
+{
+ "decisions": [
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 8387
+    },
+    "data": "CustomerSummary",
+    "env": "prod",
+    "resource": "KnowledgeDb",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 245
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "Supervisor1",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 7492
+    },
+    "data": "CustomerSummary",
+    "env": null,
+    "resource": "CrmDb",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "Agent",
+      "Supervisor"
+     ]
+    },
+    "zone": "AgentSandbox"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1766
+    },
+    "data": "LlmAnswer",
+    "env": null,
+    "resource": "ToolGateway",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Supervisor",
+      "Agent"
+     ]
+    },
+    "zone": "AgentSandbox"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 4420
+    },
+    "data": "KnowledgeArticle",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "Supervisor",
+      "Customer"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7330
+    },
+    "data": "KnowledgeArticle",
+    "env": null,
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Supervisor"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3068
+    },
+    "data": null,
+    "env": null,
+    "resource": "Summarizer",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "require_approval",
+   "matched": [
+    "AgentPolicy.EmergencyOverride"
+   ],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 9547
+    },
+    "data": "KnowledgeArticle",
+    "env": "prod",
+    "resource": "SupportBot",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Supervisor"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10001
+    },
+    "data": "AgentPrompt",
+    "env": "prod",
+    "resource": "LlmApi",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4180
+    },
+    "data": "LlmAnswer",
+    "env": null,
+    "resource": "CrmDb",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Agent"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10064
+    },
+    "data": "CustomerRecord",
+    "env": null,
+    "resource": "ChatWidget",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9374
+    },
+    "data": "CustomerRecord",
+    "env": null,
+    "resource": "CrmDb",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 549
+    },
+    "data": "LlmAnswer",
+    "env": null,
+    "resource": "KnowledgeDb",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": [
+      "Agent",
+      "Customer"
+     ]
+    },
+    "zone": "LlmProvider"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1391
+    },
+    "data": "KnowledgeArticle",
+    "env": "prod",
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "Agent",
+      "Customer"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1485
+    },
+    "data": "CustomerSummary",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 5082
+    },
+    "data": "LlmAnswer",
+    "env": "prod",
+    "resource": "LlmApi",
+    "subject": {
+     "clearance": null,
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "LlmProvider"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8493
+    },
+    "data": "AgentPrompt",
+    "env": null,
+    "resource": "CrmDb",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Supervisor"
+     ]
+    },
+    "zone": "LlmProvider"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "AgentPolicy.AgentNeverRawCustomer"
+   ],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9553
+    },
+    "data": "CustomerRecord",
+    "env": null,
+    "resource": "Supervisor1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Supervisor",
+      "Agent"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 6267
+    },
+    "data": "LlmAnswer",
+    "env": null,
+    "resource": "SupportBot",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "Supervisor"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 313
+    },
+    "data": "CustomerRecord",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "Customer",
+      "Supervisor"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "require_approval",
+   "matched": [
+    "AgentPolicy.SupervisorAll",
+    "AgentPolicy.EmergencyOverride"
+   ],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 1277
+    },
+    "data": "KnowledgeArticle",
+    "env": null,
+    "resource": "ChatWidget",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Agent",
+      "Supervisor"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "require_approval",
+   "matched": [
+    "AgentPolicy.EmergencyOverride"
+   ],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10067
+    },
+    "data": "CustomerSummary",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "Supervisor"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 9011
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "Summarizer",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "Agent"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 5076
+    },
+    "data": "CustomerRecord",
+    "env": null,
+    "resource": "ChatApi",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "LlmProvider"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 465
+    },
+    "data": "CustomerRecord",
+    "env": "prod",
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1409
+    },
+    "data": "LlmAnswer",
+    "env": null,
+    "resource": "ChatWidget",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Customer",
+      "Supervisor"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "allow",
+   "matched": [
+    "AgentPolicy.AgentPrompts"
+   ],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 8588
+    },
+    "data": "AgentPrompt",
+    "env": "prod",
+    "resource": "KnowledgeDb",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "Supervisor",
+      "Agent"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1079
+    },
+    "data": "AgentPrompt",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "Supervisor",
+      "Agent"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "AgentPolicy.ExportNeedsHuman"
+   ],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 5197
+    },
+    "data": "CustomerRecord",
+    "env": null,
+    "resource": "CrmDb",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Supervisor"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 8172
+    },
+    "data": null,
+    "env": null,
+    "resource": "ChatWidget",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": [
+      "Supervisor",
+      "Customer"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2616
+    },
+    "data": "LlmAnswer",
+    "env": null,
+    "resource": "KnowledgeDb",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "require_approval",
+   "matched": [
+    "AgentPolicy.EmergencyOverride"
+   ],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 5160
+    },
+    "data": "AgentPrompt",
+    "env": null,
+    "resource": "LlmApi",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "Customer",
+      "Supervisor"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2064
+    },
+    "data": "KnowledgeArticle",
+    "env": null,
+    "resource": "ChatWidget",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "Supervisor"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "AgentPolicy.AgentNeverRawCustomer"
+   ],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 398
+    },
+    "data": "CustomerRecord",
+    "env": "prod",
+    "resource": "KnowledgeDb",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Customer",
+      "Agent"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 9499
+    },
+    "data": "KnowledgeArticle",
+    "env": null,
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3281
+    },
+    "data": "CustomerSummary",
+    "env": "prod",
+    "resource": "Summarizer",
+    "subject": {
+     "clearance": null,
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "Agent"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 9333
+    },
+    "data": "AgentPrompt",
+    "env": null,
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Agent"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 6647
+    },
+    "data": "CustomerRecord",
+    "env": null,
+    "resource": "ChatWidget",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 5534
+    },
+    "data": null,
+    "env": null,
+    "resource": "Supervisor1",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "AgentSandbox"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 4204
+    },
+    "data": "LlmAnswer",
+    "env": "prod",
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Agent",
+      "Customer"
+     ]
+    },
+    "zone": "Browser"
+   }
+  }
+ ],
+ "files": {
+  "guard.js": "ff05e63156e14139eb38c917b0a68f18e0201dd0a757705cd77c240e9f90b1c8",
+  "policy.json": "18e266238da8d7a9c6b664b68f134ab1e1d6c9b0cf8c9aaa33ed45ff80fe789f",
+  "policy.rego": "fb9fb870c3eb578512e3a2b621ce8318c5b2e331e748a39634ac125770649686",
+  "policy.wat": "c34fe4009d22f016589dc477a7fe61c12852a26ba147532c1cb274a430433e73"
+ }
+}

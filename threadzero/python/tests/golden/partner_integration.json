@@ -1,0 +1,1112 @@
+{
+ "decisions": [
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 3050
+    },
+    "data": "ShipmentInfo",
+    "env": null,
+    "resource": "Integrator",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 9824
+    },
+    "data": "CustomerContact",
+    "env": null,
+    "resource": "Integrator",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 4161
+    },
+    "data": "OrderSummary",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 3436
+    },
+    "data": "ShipmentInfo",
+    "env": null,
+    "resource": "ShipmentMapper",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 1933
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PartnerApp"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "allow",
+   "matched": [
+    "PartnerPolicy.AdminManages"
+   ],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 6469
+    },
+    "data": "PartnerCatalog",
+    "env": "prod",
+    "resource": "DataOwner",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 4231
+    },
+    "data": null,
+    "env": null,
+    "resource": "PartnerGateway",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "PartnerNet"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 9413
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "PartnerNet"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerHard.PersonalNeverToPartner",
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 1701
+    },
+    "data": "CustomerContact",
+    "env": null,
+    "resource": "OrderService",
+    "subject": {
+     "clearance": null,
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "IntegrationAdmin",
+      "PartnerApp"
+     ]
+    },
+    "zone": "PartnerNet"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10064
+    },
+    "data": "OrderSummary",
+    "env": null,
+    "resource": "Integrator",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9374
+    },
+    "data": "OrderSummary",
+    "env": null,
+    "resource": "Integrator",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 549
+    },
+    "data": "CustomerContact",
+    "env": null,
+    "resource": "PartnerGateway",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "allow",
+   "matched": [
+    "PartnerPolicy.PartnerReadsShipment"
+   ],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1391
+    },
+    "data": "PartnerCatalog",
+    "env": "prod",
+    "resource": "PartnerSystem",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1893
+    },
+    "data": "ShipmentInfo",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "PartnerApp"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 8146
+    },
+    "data": "ShipmentInfo",
+    "env": null,
+    "resource": "DataOwner",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "PartnerApp"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 6631
+    },
+    "data": "OrderSummary",
+    "env": null,
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "PartnerNet"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 664
+    },
+    "data": "PartnerCatalog",
+    "env": "prod",
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 5248
+    },
+    "data": "ShipmentInfo",
+    "env": "prod",
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "IntegrationAdmin",
+      "PartnerApp"
+     ]
+    },
+    "zone": "Edge"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3889
+    },
+    "data": "CustomerContact",
+    "env": null,
+    "resource": "ShipmentMapper",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "Edge"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 176
+    },
+    "data": "CustomerContact",
+    "env": null,
+    "resource": "CrmService",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2128
+    },
+    "data": "CustomerContact",
+    "env": null,
+    "resource": "DataOwner",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "PartnerApp"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 5076
+    },
+    "data": "ShipmentInfo",
+    "env": null,
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Edge"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3576
+    },
+    "data": "OrderSummary",
+    "env": "prod",
+    "resource": "PartnerSystem",
+    "subject": {
+     "clearance": null,
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 9154
+    },
+    "data": "PartnerCatalog",
+    "env": "prod",
+    "resource": "PartnerGateway",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "PartnerApp"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9387
+    },
+    "data": "OrderSummary",
+    "env": null,
+    "resource": "OrderDb",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "PartnerApp"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8826
+    },
+    "data": null,
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 481
+    },
+    "data": "ShipmentInfo",
+    "env": "prod",
+    "resource": "PartnerGateway",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8186
+    },
+    "data": "PartnerCatalog",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "PartnerNet"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8677
+    },
+    "data": "CustomerContact",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 2171
+    },
+    "data": "PartnerCatalog",
+    "env": null,
+    "resource": "CrmService",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "Edge"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly",
+    "PartnerPolicy.AdminManages"
+   ],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 5919
+    },
+    "data": "CustomerContact",
+    "env": "prod",
+    "resource": "PartnerGateway",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2826
+    },
+    "data": null,
+    "env": null,
+    "resource": "PartnerSystem",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin",
+      "PartnerApp"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "allow",
+   "matched": [
+    "PartnerPolicy.AdminManages"
+   ],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7046
+    },
+    "data": "PartnerCatalog",
+    "env": null,
+    "resource": "Integrator",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 252
+    },
+    "data": "PartnerCatalog",
+    "env": "prod",
+    "resource": "Integrator",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "PartnerApp"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 6645
+    },
+    "data": "CustomerContact",
+    "env": "prod",
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1652
+    },
+    "data": "PartnerCatalog",
+    "env": null,
+    "resource": "OrderService",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 8152
+    },
+    "data": "OrderSummary",
+    "env": null,
+    "resource": "ShipmentMapper",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "IntegrationAdmin",
+      "PartnerApp"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 6155
+    },
+    "data": null,
+    "env": null,
+    "resource": "PartnerSystem",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "PartnerPolicy.PartnerCatalogOnly"
+   ],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 7729
+    },
+    "data": "CustomerContact",
+    "env": "prod",
+    "resource": "PartnerSystem",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "PartnerApp",
+      "IntegrationAdmin"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 9185
+    },
+    "data": "ShipmentInfo",
+    "env": "prod",
+    "resource": "ShipmentMapper",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "IntegrationAdmin",
+      "PartnerApp"
+     ]
+    },
+    "zone": "Backend"
+   }
+  }
+ ],
+ "files": {
+  "guard.js": "73abef1a3f921a0d692ad7dc288c60d08e62b7028c657ba14ea3bfe46a58a1ce",
+  "policy.json": "d3c676315a988d2f0017c774189e9f7338b5b1790dca7670a732fb83c929ae6b",
+  "policy.rego": "0d6774bd23aa0f2365711470d2dca91ef81a65953a69d3dacf9f5750cb584b40",
+  "policy.wat": "4c069643dc25cea6d3181bf61dbd879cf70c3f10c68b1360e98920a15e5ee2ad"
+ }
+}

@@ -1,0 +1,1100 @@
+{
+ "decisions": [
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 8387
+    },
+    "data": "Order",
+    "env": "prod",
+    "resource": "RiskOfficer",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": [
+      "PaymentApprover"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 8656
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "Ops1",
+    "subject": {
+     "clearance": null,
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "PaymentApprover"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 4557
+    },
+    "data": "CardToken",
+    "env": null,
+    "resource": "Finance1",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Ops",
+      "PaymentInitiator"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1766
+    },
+    "data": "CardToken",
+    "env": "prod",
+    "resource": "PaymentApi",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "CardRules.NoCardToPsp"
+   ],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 4420
+    },
+    "data": "CardData",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "PaymentInitiator",
+      "PaymentApprover"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7330
+    },
+    "data": "CardData",
+    "env": null,
+    "resource": "Shopper1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "PaymentInitiator"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3068
+    },
+    "data": null,
+    "env": null,
+    "resource": "OrderDb",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PaymentApprover"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 9547
+    },
+    "data": "CardData",
+    "env": "prod",
+    "resource": "Tokenizer",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PaymentInitiator"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10001
+    },
+    "data": "PaymentResult",
+    "env": "prod",
+    "resource": "Finance1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4180
+    },
+    "data": "RefundRequest",
+    "env": null,
+    "resource": "Psp",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Shopper"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10064
+    },
+    "data": "CardToken",
+    "env": null,
+    "resource": "Checkout",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9374
+    },
+    "data": "CardToken",
+    "env": null,
+    "resource": "Psp",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 549
+    },
+    "data": "RefundRequest",
+    "env": null,
+    "resource": "RiskOfficer",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": [
+      "Shopper",
+      "PaymentApprover"
+     ]
+    },
+    "zone": "ThirdParty"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "CardRules.CardOnlyInSecureZone",
+    "CardRules.NoCardToPsp"
+   ],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1391
+    },
+    "data": "CardData",
+    "env": "prod",
+    "resource": "Shopper1",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "Shopper",
+      "Finance"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1485
+    },
+    "data": "Order",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PaymentApprover"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 5082
+    },
+    "data": "RefundRequest",
+    "env": "prod",
+    "resource": "Finance1",
+    "subject": {
+     "clearance": null,
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "PaymentApprover"
+     ]
+    },
+    "zone": "ThirdParty"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8493
+    },
+    "data": "PaymentResult",
+    "env": null,
+    "resource": "Psp",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Ops"
+     ]
+    },
+    "zone": "ThirdParty"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9553
+    },
+    "data": "CardToken",
+    "env": null,
+    "resource": "Ops1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "PaymentInitiator",
+      "Finance"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 6267
+    },
+    "data": "RefundRequest",
+    "env": null,
+    "resource": "Tokenizer",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "PaymentInitiator"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2226
+    },
+    "data": "CardToken",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": null,
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Ops",
+      "PaymentApprover"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 3266
+    },
+    "data": null,
+    "env": null,
+    "resource": "Shopper1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "PaymentApprover",
+      "Ops"
+     ]
+    },
+    "zone": "ThirdParty"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 1428
+    },
+    "data": "CardData",
+    "env": "prod",
+    "resource": "Tokenizer",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "PaymentApprover",
+      "Finance"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 2023
+    },
+    "data": "RefundRequest",
+    "env": "prod",
+    "resource": "OrderDb",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": [
+      "Ops"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 4509
+    },
+    "data": "CardToken",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "ThirdParty"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "CardRules.CardOnlyInSecureZone"
+   ],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7211
+    },
+    "data": "CardData",
+    "env": null,
+    "resource": "Orchestrator",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Finance"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3411
+    },
+    "data": "Order",
+    "env": null,
+    "resource": "RiskOfficer",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "PaymentApprover",
+      "Ops"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 6563
+    },
+    "data": "CardData",
+    "env": null,
+    "resource": "RiskOfficer",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "PaymentInitiator",
+      "Shopper"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 7105
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "Psp",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "Finance"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 3180
+    },
+    "data": "CardData",
+    "env": "prod",
+    "resource": "Finance1",
+    "subject": {
+     "clearance": null,
+     "device_trust": 0,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 7156
+    },
+    "data": "PaymentResult",
+    "env": null,
+    "resource": "Shopper1",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "PaymentApprover",
+      "Ops"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2967
+    },
+    "data": "RefundRequest",
+    "env": null,
+    "resource": "Ops1",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "PaymentApprover",
+      "Finance"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2064
+    },
+    "data": null,
+    "env": null,
+    "resource": "PaymentApi",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "PaymentInitiator"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9038
+    },
+    "data": "CardToken",
+    "env": "prod",
+    "resource": "RiskOfficer",
+    "subject": {
+     "clearance": null,
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Finance",
+      "Shopper"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1584
+    },
+    "data": "CardData",
+    "env": null,
+    "resource": "Checkout",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Shopper",
+      "Finance"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3196
+    },
+    "data": null,
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": [
+      "PaymentInitiator"
+     ]
+    },
+    "zone": "ThirdParty"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1905
+    },
+    "data": "RefundRequest",
+    "env": null,
+    "resource": "Ops1",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "PaymentApprover",
+      "Ops"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 1155
+    },
+    "data": "PaymentResult",
+    "env": "prod",
+    "resource": "Orchestrator",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "ThirdParty"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "CardRules.CardOnlyInSecureZone"
+   ],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 8733
+    },
+    "data": "CardData",
+    "env": "prod",
+    "resource": "Ops1",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 3202
+    },
+    "data": "Order",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": null,
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Finance",
+      "Ops"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 6331
+    },
+    "data": "PaymentResult",
+    "env": null,
+    "resource": "RiskOfficer",
+    "subject": {
+     "clearance": null,
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "PaymentInitiator",
+      "Shopper"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  }
+ ],
+ "files": {
+  "guard.js": "3537d593318462577c8c27ccf2f924d6324312b68999d58fe051a328260dd376",
+  "policy.json": "121ea8a371dcbefc899880cc2ab4d5bae5daa036ff4b51db38e2479049f726ce",
+  "policy.rego": "f3cd3ab55310249d172af9058534cb5568bd4940d08d149f0a0cada9dd8f6908",
+  "policy.wat": "b587004cb93d3818fb157a3b0cb854c929163ca119c8140a02c58e4b843a9416"
+ }
+}

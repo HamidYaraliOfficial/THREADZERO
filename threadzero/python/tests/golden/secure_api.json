@@ -1,0 +1,1098 @@
+{
+ "decisions": [
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.ExportNeedsApproval"
+   ],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 3050
+    },
+    "data": "DbPassword",
+    "env": "staging",
+    "resource": "AdminConsole",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Support",
+      "PolicyApprover"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 975
+    },
+    "data": null,
+    "env": "staging",
+    "resource": "DbCredential",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "PolicyApprover",
+      "Support"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 4557
+    },
+    "data": "DbPassword",
+    "env": null,
+    "resource": "PublicApi",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Admin",
+      "PolicyAuthor"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.RestrictedOnlyInTrustedZones"
+   ],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1766
+    },
+    "data": "Profile",
+    "env": null,
+    "resource": "Dana",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 4420
+    },
+    "data": "PublicCatalog",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "PolicyAuthor",
+      "PolicyApprover"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7330
+    },
+    "data": "PublicCatalog",
+    "env": null,
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "PolicyAuthor"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3068
+    },
+    "data": null,
+    "env": null,
+    "resource": "DbCredential",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PolicyApprover"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3419
+    },
+    "data": "PublicCatalog",
+    "env": "staging",
+    "resource": "AccountService",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Admin"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10001
+    },
+    "data": "PublicCatalog",
+    "env": null,
+    "resource": "AdminConsole",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "Support"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4180
+    },
+    "data": "DbPassword",
+    "env": "prod",
+    "resource": "Eli",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10064
+    },
+    "data": "DbPassword",
+    "env": "staging",
+    "resource": "Dana",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9374
+    },
+    "data": "Profile",
+    "env": null,
+    "resource": "AdminConsole",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 1226
+    },
+    "data": "PublicCatalog",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "Admin"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.SecretsNeverLogged"
+   ],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1272
+    },
+    "data": "DbPassword",
+    "env": null,
+    "resource": "AccountDb",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "Support",
+      "Admin"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1893
+    },
+    "data": null,
+    "env": "staging",
+    "resource": "DbCredential",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 365
+    },
+    "data": "DbPassword",
+    "env": null,
+    "resource": "AdminConsole",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PolicyApprover",
+      "Customer"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.RestrictedOnlyInTrustedZones"
+   ],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8164
+    },
+    "data": "Profile",
+    "env": null,
+    "resource": "AccountDb",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "PolicyApprover",
+      "Support"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 664
+    },
+    "data": "PublicCatalog",
+    "env": "staging",
+    "resource": "DbCredential",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "Support"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 7413
+    },
+    "data": "DbPassword",
+    "env": "prod",
+    "resource": "PublicApi",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "PolicyApprover",
+      "PolicyAuthor"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4364
+    },
+    "data": "Profile",
+    "env": "staging",
+    "resource": "AccountDb",
+    "subject": {
+     "clearance": null,
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "Customer",
+      "Support"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4194
+    },
+    "data": null,
+    "env": "staging",
+    "resource": "Dana",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": [
+      "Customer"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 1428
+    },
+    "data": "PublicCatalog",
+    "env": "staging",
+    "resource": "AccountDb",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "PolicyApprover",
+      "Support"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 2023
+    },
+    "data": null,
+    "env": "staging",
+    "resource": "Dana",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "Admin",
+      "PolicyAuthor"
+     ]
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 6904
+    },
+    "data": "Profile",
+    "env": "staging",
+    "resource": null,
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.RestrictedOnlyInTrustedZones"
+   ],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7211
+    },
+    "data": "DbPassword",
+    "env": "prod",
+    "resource": "WebApp",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Support",
+      "PolicyAuthor"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3411
+    },
+    "data": "DbPassword",
+    "env": "staging",
+    "resource": "Dana",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "Support",
+      "Admin"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 720
+    },
+    "data": "PublicCatalog",
+    "env": "staging",
+    "resource": "Dana",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": "Office",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4035
+    },
+    "data": null,
+    "env": "staging",
+    "resource": "WebApp",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "PolicyAuthor"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.RestrictedOnlyInTrustedZones"
+   ],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 583
+    },
+    "data": "Profile",
+    "env": "staging",
+    "resource": "PublicApi",
+    "subject": {
+     "clearance": null,
+     "device_trust": 1,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 3239
+    },
+    "data": "PublicCatalog",
+    "env": "prod",
+    "resource": "AdminConsole",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "PolicyApprover",
+      "Customer"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 2235
+    },
+    "data": "PublicCatalog",
+    "env": "staging",
+    "resource": "PublicApi",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "Support",
+      "PolicyApprover"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.RestrictedOnlyInTrustedZones",
+    "Guardrails.ApiWritesNeedMfa"
+   ],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": "Remote",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1444
+    },
+    "data": "Profile",
+    "env": null,
+    "resource": "PublicApi",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 5919
+    },
+    "data": "PublicCatalog",
+    "env": "staging",
+    "resource": "DbCredential",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9318
+    },
+    "data": "PublicCatalog",
+    "env": null,
+    "resource": "AdminConsole",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1584
+    },
+    "data": "Profile",
+    "env": null,
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "Guardrails.RestrictedOnlyInTrustedZones"
+   ],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3196
+    },
+    "data": "Profile",
+    "env": null,
+    "resource": null,
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": [
+      "PolicyAuthor"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Office",
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 6645
+    },
+    "data": "DbPassword",
+    "env": "staging",
+    "resource": "Eli",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Admin",
+      "PolicyApprover"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1652
+    },
+    "data": "PublicCatalog",
+    "env": null,
+    "resource": "PublicApi",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "DatabaseZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 8152
+    },
+    "data": "Profile",
+    "env": null,
+    "resource": "AccountService",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "PolicyAuthor",
+      "Support"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": "Remote",
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 6155
+    },
+    "data": null,
+    "env": null,
+    "resource": "Customer1",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "PolicyAuthor"
+     ]
+    },
+    "zone": "SecretZone"
+   }
+  }
+ ],
+ "files": {
+  "guard.js": "6f5f779a3335908f3bf1f33ceb6a432483784c54e0d33da15555fa7af4c56284",
+  "policy.json": "dafc7a30ca7c9071223823729b673a5e3643d5ac8ef20068fc23941da28ae9c5",
+  "policy.rego": "c6cf058644a1b8f81fb759c5d8b36bc7db6c986184950c8b2e291551ee1f9207",
+  "policy.wat": "f0057cbc035864e0fd8c16d120b37af13a2d1c2c805f52eee58570cda376aa3a"
+ }
+}

@@ -1,0 +1,1082 @@
+{
+ "decisions": [
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 8387
+    },
+    "data": "RedactedText",
+    "env": "prod",
+    "resource": "DocStore",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": [
+      "Publisher"
+     ]
+    },
+    "zone": "PublicWeb"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 245
+    },
+    "data": null,
+    "env": null,
+    "resource": "Notifier",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 4,
+     "mfa": false,
+     "roles": [
+      "Reviewer",
+      "Publisher"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 7492
+    },
+    "data": "RedactedText",
+    "env": null,
+    "resource": "Redactor",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "Uploader",
+      "Reviewer"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1766
+    },
+    "data": "ExtractedText",
+    "env": "prod",
+    "resource": "Notifier",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 3252
+    },
+    "data": "RawDocument",
+    "env": "prod",
+    "resource": "Editor",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Publisher"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 9163
+    },
+    "data": null,
+    "env": null,
+    "resource": "UploadApi",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 321
+    },
+    "data": "RedactedText",
+    "env": null,
+    "resource": "OcrWorker",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 6327
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "UploadApi",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Read",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 3741
+    },
+    "data": "ExtractedText",
+    "env": "prod",
+    "resource": "Redactor",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "Uploader",
+      "Reviewer"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4180
+    },
+    "data": "RedactedText",
+    "env": "prod",
+    "resource": "SearchIndex",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "DocumentGuards.NoTextLogging"
+   ],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 10064
+    },
+    "data": "ExtractedText",
+    "env": null,
+    "resource": "Portal",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 9374
+    },
+    "data": "ExtractedText",
+    "env": null,
+    "resource": "Redactor",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 549
+    },
+    "data": "ScanVerdict",
+    "env": null,
+    "resource": "Portal",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 2,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 1391
+    },
+    "data": "RawDocument",
+    "env": "prod",
+    "resource": "Clerk",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "Uploader",
+      "Publisher"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1485
+    },
+    "data": "RedactedText",
+    "env": "prod",
+    "resource": null,
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Publisher"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 365
+    },
+    "data": "ScanVerdict",
+    "env": null,
+    "resource": "Redactor",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Publisher",
+      "Uploader"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8164
+    },
+    "data": "ExtractedText",
+    "env": null,
+    "resource": "Scanner",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": [
+      "Publisher",
+      "Uploader"
+     ]
+    },
+    "zone": null
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 664
+    },
+    "data": "RawDocument",
+    "env": "prod",
+    "resource": "OcrWorker",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 7413
+    },
+    "data": "RedactedText",
+    "env": "prod",
+    "resource": "Editor",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Publisher"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3889
+    },
+    "data": "ScanVerdict",
+    "env": null,
+    "resource": "JobQueue",
+    "subject": {
+     "clearance": "Restricted",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Uploader",
+      "Reviewer"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Delete",
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 4194
+    },
+    "data": "ScanVerdict",
+    "env": "prod",
+    "resource": "Analytics",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 6356
+    },
+    "data": "RawDocument",
+    "env": null,
+    "resource": "Notifier",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "Publisher"
+     ]
+    },
+    "zone": "Backend"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 2023
+    },
+    "data": "ScanVerdict",
+    "env": "prod",
+    "resource": "Analytics",
+    "subject": {
+     "clearance": "Public",
+     "device_trust": 1,
+     "mfa": false,
+     "roles": [
+      "Reviewer"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 4509
+    },
+    "data": "ExtractedText",
+    "env": "prod",
+    "resource": "PublicBucket",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Uploader",
+      "Publisher"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7211
+    },
+    "data": "RawDocument",
+    "env": null,
+    "resource": "Scanner",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Uploader"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Transform",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 3411
+    },
+    "data": "RedactedText",
+    "env": null,
+    "resource": "DocStore",
+    "subject": {
+     "clearance": "Secret",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "Publisher",
+      "Reviewer"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 6563
+    },
+    "data": "RawDocument",
+    "env": null,
+    "resource": "DocStore",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "Reviewer",
+      "Uploader"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Copy",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 7105
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "Redactor",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 1,
+     "mfa": true,
+     "roles": [
+      "Uploader"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": null,
+    "context": {
+     "approved": true,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 3180
+    },
+    "data": "RawDocument",
+    "env": "prod",
+    "resource": "SearchIndex",
+    "subject": {
+     "clearance": null,
+     "device_trust": 0,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Export",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 7156
+    },
+    "data": "ScanVerdict",
+    "env": null,
+    "resource": "Clerk",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Publisher",
+      "Reviewer"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2967
+    },
+    "data": "ScanVerdict",
+    "env": null,
+    "resource": "UploadApi",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 5,
+     "mfa": true,
+     "roles": [
+      "Publisher",
+      "Uploader"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Write",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": false,
+     "time": 8901
+    },
+    "data": null,
+    "env": null,
+    "resource": "Editor",
+    "subject": {
+     "clearance": "Personal",
+     "device_trust": 3,
+     "mfa": true,
+     "roles": [
+      "Uploader",
+      "Reviewer"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Cache",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 8237
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "SearchIndex",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Uploader"
+     ]
+    },
+    "zone": "Browser"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Subscribe",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 2826
+    },
+    "data": null,
+    "env": "prod",
+    "resource": "DocStore",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": []
+    },
+    "zone": "PublicWeb"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Create",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 7046
+    },
+    "data": "RawDocument",
+    "env": null,
+    "resource": "Redactor",
+    "subject": {
+     "clearance": "Financial",
+     "device_trust": 4,
+     "mfa": true,
+     "roles": [
+      "Reviewer"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": true,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 252
+    },
+    "data": "RawDocument",
+    "env": "prod",
+    "resource": "Redactor",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 0,
+     "mfa": false,
+     "roles": [
+      "Uploader"
+     ]
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Publish",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": true,
+     "time": 6645
+    },
+    "data": "ScanVerdict",
+    "env": "prod",
+    "resource": "UploadApi",
+    "subject": {
+     "clearance": "Internal",
+     "device_trust": 5,
+     "mfa": false,
+     "roles": [
+      "Reviewer"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [
+    "DocumentGuards.NoTextLogging"
+   ],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 1652
+    },
+    "data": "RawDocument",
+    "env": null,
+    "resource": "UploadApi",
+    "subject": {
+     "clearance": "HighlySensitive",
+     "device_trust": 2,
+     "mfa": false,
+     "roles": []
+    },
+    "zone": "SecureProcessing"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Enrich",
+    "context": {
+     "approved": false,
+     "emergency": false,
+     "location": null,
+     "secure_channel": false,
+     "tenant_match": false,
+     "time": 8152
+    },
+    "data": "ExtractedText",
+    "env": null,
+    "resource": "JobQueue",
+    "subject": {
+     "clearance": "Credential",
+     "device_trust": 3,
+     "mfa": false,
+     "roles": [
+      "Reviewer",
+      "Uploader"
+     ]
+    },
+    "zone": "AdminZone"
+   }
+  },
+  {
+   "decision": "deny",
+   "matched": [],
+   "request": {
+    "action": "Log",
+    "context": {
+     "approved": true,
+     "emergency": false,
+     "location": null,
+     "secure_channel": true,
+     "tenant_match": true,
+     "time": 6155
+    },
+    "data": null,
+    "env": null,
+    "resource": "Clerk",
+    "subject": {
+     "clearance": "Confidential",
+     "device_trust": 0,
+     "mfa": true,
+     "roles": [
+      "Reviewer"
+     ]
+    },
+    "zone": "StorageZone"
+   }
+  }
+ ],
+ "files": {
+  "guard.js": "cd1620bbbb44823d6e7b3291692232216e85bce7d1edec3abc866af6cac613bf",
+  "policy.json": "d7139f5e16e5688585922a7c24cfe863ff1c151c6e5ee02dc7cf09a68fd32419",
+  "policy.rego": "729170ca318950065814a08c14543ba488a749a599c2691f277882374d4133c6",
+  "policy.wat": "3f333598ce14ea26860a272516d280b801707b80feaa35f70d7c2b37f00a2eab"
+ }
+}
