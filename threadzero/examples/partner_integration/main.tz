@@ -1,0 +1,59 @@
+# THREADZERO example 6 — External Partner Integration
+# A partner pushes orders and pulls minimized shipment data through a gateway with token exchange.
+project "External Partner Integration" version "1.0.0" timezone "UTC";
+
+zone PartnerNet trust 0 kind PartnerZone;
+zone Edge trust 2 kind InternalNetwork;
+zone Backend trust 3 kind Backend;
+zone DatabaseZone trust 4 kind DatabaseZone;
+zone AdminZone trust 3 kind AdminZone;
+
+role PartnerApp; role IntegrationAdmin;
+env prod;
+
+window PartnerSync { days: weekdays; from: 06:00; to: 22:00; kind: open; }
+
+data PartnerCatalog class Internal { operations: [Read, Export]; owner: "Partnerships"; }
+data OrderSummary class Confidential { operations: [Create, Read, Export, Write]; owner: "Commerce"; encryption: required; retention: 365d; logging: redacted; export: approval; }
+data ShipmentInfo class Internal { derived_from: [OrderSummary]; operations: [Read, Export, Create]; }
+data CustomerContact class Personal { owner: "CRM"; operations: [Read, Write, Export]; encryption: required; retention: 730d; logging: forbidden; export: deny; }
+
+external PartnerSystem in PartnerNet { description: "partner order management system"; }
+api PartnerGateway in Edge {
+  controls: [authentication, authorization, audit, rate_limit, schema_validation, input_validation, token_exchange, integrity_check];
+  egress_controls: [output_filtering, redaction, data_minimization, audit];
+}
+service OrderService in Backend { controls: [authentication, authorization, audit, schema_validation, input_validation, rate_limit, token_exchange]; egress_controls: [output_filtering]; }
+service ShipmentMapper in Backend { controls: [authentication, authorization, audit, redaction]; egress_controls: [output_filtering, redaction, data_minimization, audit]; clearance: Confidential; }
+service CrmService in Backend { controls: [authentication, authorization, audit]; clearance: Personal; }
+database OrderDb in DatabaseZone { controls: [authentication, authorization, encryption, audit]; egress_controls: [output_filtering]; }
+identity Integrator in AdminZone { mfa: true; }
+approval DataOwner in AdminZone;
+
+assign Integrator role IntegrationAdmin;
+declassify ShipmentView { data: OrderSummary; produces: ShipmentInfo; via: ShipmentMapper; approval: DataOwner; }
+
+flow PartnerCatalogPull from PartnerGateway to PartnerSystem carries PartnerCatalog op Export { channel: mtls; controls: [audit]; }
+flow PartnerPushOrder from PartnerSystem to PartnerGateway carries OrderSummary op Create { channel: mtls; step: 1; }
+flow GatewayToOrders from PartnerGateway to OrderService carries OrderSummary op Create { channel: mtls; step: 2; }
+flow OrdersToDb from OrderService to OrderDb carries OrderSummary op Write { channel: mtls; step: 3; }
+flow MapShipment from OrderDb to ShipmentMapper carries OrderSummary op Read { channel: mtls; step: 4; }
+flow ShipmentOut from ShipmentMapper to PartnerGateway carries ShipmentInfo op Create { channel: mtls; step: 5; }
+flow ShipmentToPartner from PartnerGateway to PartnerSystem carries ShipmentInfo op Export { channel: mtls; step: 6; }
+flow SyncCustomers from CrmService to PartnerSystem carries CustomerContact op Export { channel: tls; }
+
+policy PartnerPolicy version "1.0.0" priority 100 scope global {
+  rule PartnerPushes: allow when subject.role == PartnerApp and data == OrderSummary and action == Create and subject.mfa and in_window(PartnerSync);
+  rule PartnerReadsShipment: allow when subject.role == PartnerApp and data in [ShipmentInfo, PartnerCatalog] and action in [Read, Export];
+  rule AdminManages: allow when subject.role == IntegrationAdmin and subject.mfa and subject.device_trust >= 3 and zone.kind == AdminZone;
+  rule PartnerCatalogOnly: deny when subject.role == PartnerApp and data.classification > Internal and action != Create priority 500 reason "partners only see internal data on read";
+  rule ExportApproval: require_approval when action == Export and data.classification >= Confidential;
+}
+policy PartnerHard version "1.0.0" priority 900 scope global {
+  rule PersonalNeverToPartner: deny when data == CustomerContact and zone.kind in [PartnerZone, ThirdPartyZone] reason "personal contact data never leaves the platform";
+}
+
+assert PersonalNeverToPartner: never data CustomerContact enters zone PartnerNet;
+assert PartnerGatewayAuth: PartnerGateway must_have authentication;
+assert PartnerExportsAudited: action Export must audit;
+assert PartnerCannotReadPersonal: request subject.role == PartnerApp and data == CustomerContact must deny;

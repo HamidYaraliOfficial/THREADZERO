@@ -1,0 +1,27 @@
+{
+ "artifactHash": "291f6d3f3263c39da489e654a88456e0b47201b480224b43713958c80fefd9b6",
+ "compiler": {
+  "abi": 1,
+  "core": "threadzero-core 1.0.0 tz-rules-1.0",
+  "threadzero": "1.0.0"
+ },
+ "dependencies": {
+  "PyYAML": "6.0.3",
+  "cryptography": "46.0.6",
+  "fastapi": "0.141.1",
+  "wasmtime": "48.0.0"
+ },
+ "lockVersion": 1,
+ "ruleset": "tz-rules-1.0",
+ "schemas": {
+  "abi": "1",
+  "ast": "1",
+  "lock": "1",
+  "package": "1",
+  "policy-ir": "1"
+ },
+ "sourceHash": "00e0cde278d384390854ba79b5c7f4bb019df3c443564e9c843d09b2426ece21",
+ "sources": {
+  "main.tz": "7bec8c4c8c1ab3b2adf736c6c5ce3b6aa2f4d757184e1371541e01f3ec21302f"
+ }
+}

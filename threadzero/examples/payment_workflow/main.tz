@@ -1,0 +1,97 @@
+# THREADZERO example 2 — Payment Workflow
+# Card data never leaves the secure processing zone; only tokens reach the payment provider.
+# Includes human approval, separation of duties, delegation and maintenance windows.
+project "Payment Workflow" version "1.0.0" timezone "UTC";
+
+zone Browser trust 1 kind Browser max_class Financial;
+zone Backend trust 3 kind Backend;
+zone SecureProcessing trust 4 kind SecureProcessingZone;
+zone DatabaseZone trust 4 kind DatabaseZone;
+zone ThirdParty trust 0 kind ThirdPartyZone max_class Confidential;
+zone AdminZone trust 3 kind AdminZone;
+
+role Shopper;
+role Finance;
+role Ops;
+role PaymentInitiator;
+role PaymentApprover;
+env prod;
+
+window BusinessHours { days: weekdays; from: 08:00; to: 18:00; kind: open; }
+window MaintenanceWindow { days: [sun]; from: 02:00; to: 04:00; kind: maintenance; }
+
+data CardData class Financial {
+  owner: "Payments"; zones: [Browser, SecureProcessing]; operations: [Create, Transform];
+  retention: 0s; encryption: required; logging: forbidden; export: deny;
+}
+data CardToken class Internal { owner: "Payments"; operations: [Create, Read, Export, Write]; derived_from: [CardData]; logging: allowed; }
+data Order class Confidential { owner: "Commerce"; operations: [Create, Read, Write, Export]; retention: 730d; encryption: required; logging: redacted; export: allow; }
+data PaymentResult class Internal { operations: [Create, Read, Write]; }
+data RefundRequest class Confidential { owner: "Finance"; operations: [Create, Read]; encryption: required; retention: 365d; }
+
+user Shopper1 in Browser;
+application Checkout in Browser { controls: [encryption]; }
+api PaymentApi in Backend {
+  controls: [authentication, authorization, audit, rate_limit, schema_validation, input_validation];
+}
+service Tokenizer in SecureProcessing {
+  controls: [authentication, authorization, audit, tokenization, isolation, schema_validation, input_validation, rate_limit];
+  egress_controls: [output_filtering];
+  clearance: Financial;
+}
+service Orchestrator in Backend {
+  controls: [authentication, authorization, audit, schema_validation, input_validation, rate_limit, token_exchange];
+  egress_controls: [output_filtering, redaction, data_minimization, audit];
+}
+database OrderDb in DatabaseZone { controls: [authentication, authorization, encryption, audit]; egress_controls: [output_filtering]; }
+external Psp in ThirdParty { description: "external payment service provider"; }
+approval RiskOfficer in AdminZone;
+identity Finance1 in AdminZone { mfa: true; }
+identity Ops1 in AdminZone;
+
+assign Shopper1 role Shopper;
+assign Finance1 role Finance;
+assign Finance1 role PaymentInitiator;
+assign RiskOfficer role PaymentApprover;
+
+delegate CoverForFinance { from: Finance1; to: Ops1; role: PaymentInitiator; expires: "2026-12-31"; chain_max: 1; revoked: false; }
+declassify CardToStoredToken { data: CardData; produces: CardToken; via: Tokenizer; approval: RiskOfficer; }
+
+flow EnterCard from Shopper1 to Checkout carries CardData op Create { channel: internal; step: 1; }
+flow TokenizeCard from Checkout to Tokenizer carries CardData op Transform { channel: tls; step: 2; }
+flow TokenToApi from Tokenizer to PaymentApi carries CardToken op Create { channel: mtls; step: 3; }
+flow Orchestrate from PaymentApi to Orchestrator carries CardToken, Order op Create { channel: mtls; step: 4; }
+flow Charge from Orchestrator to Psp carries CardToken, Order op Export { channel: mtls; step: 5; }
+flow PspResult from Psp to Orchestrator carries PaymentResult op Create { channel: mtls; step: 6; }
+flow SaveOrder from Orchestrator to OrderDb carries Order, PaymentResult op Write { channel: mtls; step: 7; }
+flow Refund from Finance1 to PaymentApi carries RefundRequest op Create { channel: mtls; }
+flow LegacyExport from OrderDb to Psp carries Order op Export { channel: tls; }
+
+workflow RefundApproval { steps: [Refund]; approvals: [RiskOfficer]; }
+
+policy CardRules version "1.0.0" priority 900 scope global {
+  rule CardOnlyInSecureZone: deny when data == CardData and not (zone.kind in [SecureProcessingZone, Browser])
+      reason "card numbers are processed only in the secure processing zone";
+  rule NoCardToPsp: deny when data == CardData and action == Export reason "card numbers never leave the platform";
+}
+policy PaymentAccess version "1.0.0" priority 100 scope global {
+  rule ShopperPays: allow when subject.role == Shopper and data in [CardData, CardToken] and action in [Create, Transform] and env == prod;
+  rule PspTokenExport: allow when action == Export and resource == Psp and data == CardToken obligations [audit];
+  rule FinanceRefund: allow when subject.role == Finance and data == RefundRequest and action == Create
+      and subject.mfa and in_window(BusinessHours) obligations [audit];
+  rule RefundApproval: require_approval when data == RefundRequest and action == Create;
+  rule MfaForPaymentApi: require_mfa when resource == PaymentApi and subject.role == Finance;
+}
+policy MaintenanceOnly version "1.0.0" priority 500 scope resource OrderDb {
+  rule NoDeleteOutsideMaintenance: deny when action == Delete and not in_window(MaintenanceWindow) reason "schema maintenance only in the Sunday window";
+}
+
+separation PaymentDuties { roles: [PaymentInitiator, PaymentApprover]; }
+
+assert CardNeverToPsp: never data CardData enters zone ThirdParty;
+assert CardNeverLogged: never data CardData op Log;
+assert ExportAudited: action Export must audit;
+assert PaymentApiAuth: PaymentApi must_have authentication;
+assert CardExportDenied: request data == CardData and action == Export must deny;
+
+constraint TokenizerIsolation: require_control isolation on Browser -> SecureProcessing;

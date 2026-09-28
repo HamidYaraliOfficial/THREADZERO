@@ -1,0 +1,73 @@
+# THREADZERO example 3 — Document Processing Pipeline
+# Upload -> malware scan -> OCR in a secure zone -> redaction -> publication with human approval.
+project "Document Processing Pipeline" version "1.0.0" timezone "Europe/Berlin";
+
+zone Browser trust 1 kind Browser max_class Restricted;
+zone Backend trust 3 kind Backend;
+zone SecureProcessing trust 4 kind SecureProcessingZone;
+zone StorageZone trust 4 kind DatabaseZone;
+zone AdminZone trust 3 kind AdminZone;
+zone PublicWeb trust 0 kind PublicInternet;
+
+role Uploader; role Reviewer; role Publisher;
+env prod;
+
+window ReviewHours { days: weekdays; from: 08:00; to: 20:00; kind: open; }
+
+data RawDocument class Restricted {
+  owner: "Records"; zones: [Browser, Backend, SecureProcessing, StorageZone];
+  operations: [Create, Read, Write, Transform, Delete, Publish, Subscribe]; retention: 90d; encryption: required; logging: forbidden; export: deny;
+}
+data ExtractedText class Restricted {
+  owner: "Records"; derived_from: [RawDocument]; operations: [Create, Read, Write, Transform, Copy];
+  retention: 90d; encryption: required; logging: forbidden; export: deny;
+}
+data RedactedText class Internal { owner: "Records"; derived_from: [ExtractedText]; operations: [Create, Read, Write, Publish, Export]; }
+data ScanVerdict class Internal { operations: [Create, Read]; }
+
+user Clerk in Browser;
+application Portal in Browser { controls: [encryption]; }
+api UploadApi in Backend { controls: [authentication, authorization, audit, rate_limit, schema_validation, input_validation]; }
+queue JobQueue in Backend { controls: [authentication, authorization, audit]; }
+service Scanner in Backend { controls: [authentication, authorization, audit, schema_validation, input_validation]; }
+service OcrWorker in SecureProcessing { controls: [authentication, authorization, audit, isolation, schema_validation, input_validation]; egress_controls: [output_filtering]; clearance: Restricted; }
+service Redactor in SecureProcessing { controls: [authentication, authorization, audit, redaction, isolation]; egress_controls: [output_filtering, redaction, data_minimization]; clearance: Restricted; }
+filestore DocStore in StorageZone { controls: [authentication, authorization, encryption, audit, integrity_check]; egress_controls: [output_filtering]; }
+service SearchIndex in Backend { controls: [authentication, authorization, audit, isolation]; clearance: Restricted; }
+service Analytics in Backend { controls: [authentication, authorization, audit, isolation]; clearance: Restricted; }
+service Backup in Backend { controls: [authentication, authorization, audit, isolation]; clearance: Restricted; }
+service Notifier in Backend { controls: [authentication, authorization, audit, isolation]; clearance: Restricted; }
+cloud PublicBucket in PublicWeb { description: "static hosting for published documents"; }
+approval Editor in AdminZone;
+
+assign Clerk role Uploader;
+declassify RedactToPublic { data: ExtractedText; produces: RedactedText; via: Redactor; approval: Editor; }
+
+flow UploadDoc from Portal to UploadApi carries RawDocument op Create { channel: tls; step: 1; }
+flow QueueScan from UploadApi to JobQueue carries RawDocument op Publish { channel: mtls; step: 2; }
+flow ScanDoc from JobQueue to Scanner carries RawDocument op Subscribe { channel: mtls; step: 3; }
+flow ToOcr from Scanner to OcrWorker carries RawDocument op Transform { channel: mtls; step: 4; }
+flow StoreRaw from OcrWorker to DocStore carries RawDocument op Write { channel: mtls; step: 5; }
+flow StoreText from OcrWorker to DocStore carries ExtractedText op Write { channel: mtls; step: 6; }
+flow ToRedact from DocStore to Redactor carries ExtractedText op Read { channel: mtls; step: 7; }
+flow PublishRedacted from Redactor to PublicBucket carries RedactedText op Export { channel: tls; controls: [approval, audit]; step: 8; }
+flow IndexText from OcrWorker to SearchIndex carries ExtractedText op Copy { channel: mtls; }
+flow AnalyzeText from OcrWorker to Analytics carries ExtractedText op Copy { channel: mtls; }
+flow BackupText from OcrWorker to Backup carries ExtractedText op Copy { channel: mtls; }
+flow NotifyText from OcrWorker to Notifier carries ExtractedText op Copy { channel: mtls; }
+
+policy DocumentAccess version "1.0.0" priority 100 scope global {
+  rule UploaderCreates: allow when subject.role == Uploader and data == RawDocument and action == Create and subject.mfa;
+  rule ReviewerReadsRedacted: allow when subject.role == Reviewer and data == RedactedText and action == Read and in_window(ReviewHours);
+  rule PublisherPublishes: allow when subject.role == Publisher and data == RedactedText and action == Export and subject.mfa obligations [audit];
+  rule PublishNeedsApproval: require_approval when action == Export and data == RedactedText;
+}
+policy DocumentGuards version "1.0.0" priority 900 scope global {
+  rule RestrictedStaysInside: deny when data.classification >= Restricted and zone.kind in [PublicInternet, ThirdPartyZone, PartnerZone] reason "restricted documents never leave the platform";
+  rule NoTextLogging: deny when action == Log and data in [RawDocument, ExtractedText] obligations [audit];
+}
+
+assert RawNeverPublic: never data RawDocument enters zone PublicWeb;
+assert ExtractedNeverPublic: never data ExtractedText enters zone PublicWeb;
+assert PublishAudited: action Export must audit;
+constraint ScanBeforeOcr: require_control authorization on Backend -> SecureProcessing;

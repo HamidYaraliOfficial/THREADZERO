@@ -1,0 +1,73 @@
+# THREADZERO example 5 — Multi-Tenant SaaS
+# Tenant isolation is enforced by policy (context.tenant_match) and proven where the model allows.
+project "Multi-Tenant SaaS" version "1.0.0" timezone "UTC";
+
+zone Browser trust 1 kind Browser max_class Confidential;
+zone Backend trust 3 kind ServiceMesh;
+zone DatabaseZone trust 4 kind DatabaseZone;
+zone SupportZone trust 3 kind AdminZone;
+zone SecretZone trust 5 kind SecretZone;
+
+role TenantUser; role TenantAdmin; role SupportEngineer;
+env prod; env staging;
+
+window BusinessHours { days: weekdays; from: 08:00; to: 18:00; kind: open; }
+window BreakGlass { days: daily; from: 00:00; to: 24:00; kind: emergency; }
+
+data TenantData class Confidential { owner: "Platform"; operations: [Create, Read, Write, Delete, Export, Publish, Subscribe, Copy]; encryption: required; retention: 1095d; logging: redacted; export: approval; }
+data BillingRecord class Financial { owner: "Billing"; operations: [Create, Read, Write, Export]; encryption: required; retention: 2555d; logging: forbidden; }
+data UsageMetric class Internal { operations: [Create, Read, Publish, Subscribe]; }
+data TenantKey class Secret { operations: [Read]; logging: forbidden; encryption: required; retention: 365d; }
+
+user Tenant1User in Browser;
+application Dashboard in Browser { controls: [encryption]; }
+api SaasApi in Backend { controls: [authentication, authorization, audit, rate_limit, schema_validation, input_validation]; }
+service TenantService in Backend { controls: [authentication, authorization, audit, isolation]; clearance: Secret; }
+service BillingService in Backend { controls: [authentication, authorization, audit, isolation]; clearance: Financial; }
+service ReportService in Backend { controls: [authentication, authorization, audit]; clearance: Confidential; }
+queue EventBus in Backend { controls: [authentication, authorization, audit]; }
+service Indexer in Backend { controls: [authentication, authorization, audit]; clearance: Confidential; }
+service Exporter in Backend { controls: [authentication, authorization, audit]; clearance: Confidential; }
+service Notifier in Backend { controls: [authentication, authorization, audit]; clearance: Confidential; }
+database SharedDb in DatabaseZone { controls: [authentication, authorization, encryption, audit]; egress_controls: [output_filtering]; }
+secret KmsKey in SecretZone { reference: "kms://tenant-keys"; provider: "cloud-kms"; egress_controls: [output_filtering]; }
+identity Sre1 in SupportZone { mfa: true; }
+
+assign Tenant1User role TenantUser;
+assign Sre1 role SupportEngineer;
+
+flow LoadDashboard from Dashboard to SaasApi carries TenantData op Read { channel: tls; step: 1; }
+flow ApiToTenant from SaasApi to TenantService carries TenantData op Write { channel: mtls; step: 2; }
+flow TenantToDb from TenantService to SharedDb carries TenantData op Write { channel: mtls; step: 3; }
+flow BillingToDb from BillingService to SharedDb carries BillingRecord op Write { channel: mtls; }
+flow KeyFetch from KmsKey to TenantService carries TenantKey op Read { channel: mtls; controls: [audit]; }
+flow ReportRead from SharedDb to ReportService carries TenantData op Read { channel: mtls; }
+flow PublishEvent from TenantService to EventBus carries TenantData op Publish { channel: mtls; }
+flow ToIndexer from EventBus to Indexer carries TenantData op Subscribe { channel: mtls; }
+flow ToExporter from EventBus to Exporter carries TenantData op Subscribe { channel: mtls; }
+flow ToNotifier from EventBus to Notifier carries TenantData op Subscribe { channel: mtls; }
+flow ToBilling from EventBus to BillingService carries TenantData op Subscribe { channel: mtls; }
+flow UsageOut from TenantService to EventBus carries UsageMetric op Publish { channel: mtls; }
+
+policy TenantIsolation version "1.0.0" priority 950 scope global {
+  rule CrossTenantDeny: deny when data in [TenantData, BillingRecord] and not context.tenant_match and not context.emergency
+      reason "a request may only touch its own tenant's data";
+}
+policy TenantAccess version "1.0.0" priority 100 scope global {
+  rule TenantUserRead: allow when subject.role == TenantUser and data == TenantData and action in [Read, Create, Write] and context.tenant_match;
+  rule TenantAdminManage: allow when subject.role == TenantAdmin and data in [TenantData, BillingRecord] and context.tenant_match and subject.mfa;
+  rule SupportBreakGlass: allow when subject.role == SupportEngineer and context.emergency and in_window(BreakGlass) and subject.mfa
+      obligations [audit, require_approval] reason "time-boxed emergency access";
+  rule ExportNeedsApproval: require_approval when action == Export and data == TenantData;
+}
+policy KeyProtection version "1.0.0" priority 990 scope data TenantKey {
+  rule KeysOnlyInSecretZone: deny when zone.kind != SecretZone reason "tenant keys are only handled in the secret zone";
+}
+
+separation SupportDuties { roles: [SupportEngineer, TenantAdmin]; }
+
+assert TenantIsolationProof: request not context.tenant_match and data == TenantData and not context.emergency must deny;
+assert TenantDataNeverInBrowserExport: never data TenantData op Log;
+assert KeysNeverLogged: never data TenantKey op Log;
+assert ApiAuth: SaasApi must_have authentication;
+constraint BusFanout: max_fanout TenantData 5;

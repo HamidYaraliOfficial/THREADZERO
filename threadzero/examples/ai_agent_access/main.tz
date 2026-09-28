@@ -1,0 +1,63 @@
+# THREADZERO example 4 — AI Agent Data Access
+# A support agent may read knowledge and redacted customer summaries; restricted actions need a human.
+project "AI Agent Data Access" version "1.0.0" timezone "UTC";
+
+zone Browser trust 1 kind Browser max_class Personal;
+zone AgentSandbox trust 2 kind InternalNetwork;
+zone Backend trust 3 kind Backend;
+zone DatabaseZone trust 4 kind DatabaseZone;
+zone LlmProvider trust 0 kind ThirdPartyZone max_class Confidential;
+zone AdminZone trust 3 kind AdminZone;
+
+role Agent; role Supervisor; role Customer;
+env prod;
+location Office;
+
+window AgentActive { days: daily; from: 06:00; to: 22:00; kind: open; }
+window Emergency { days: daily; from: 00:00; to: 24:00; kind: emergency; }
+
+data KnowledgeArticle class Internal { operations: [Read]; owner: "Support"; }
+data CustomerRecord class Personal { owner: "CRM"; operations: [Read, Write, Export, Transform]; encryption: required; retention: 730d; logging: redacted; export: approval; }
+data CustomerSummary class Internal { derived_from: [CustomerRecord]; operations: [Read, Create]; }
+data AgentPrompt class Confidential { operations: [Create, Transform, Export]; logging: redacted; encryption: required; retention: 30d; }
+data LlmAnswer class Internal { operations: [Create, Read]; }
+
+user Customer1 in Browser;
+application ChatWidget in Browser { controls: [encryption]; }
+api ChatApi in Backend { controls: [authentication, authorization, audit, rate_limit, schema_validation, input_validation]; egress_controls: [output_filtering]; }
+agent SupportBot in AgentSandbox { controls: [authentication, authorization, audit, input_validation, schema_validation, rate_limit, token_exchange]; egress_controls: [output_filtering, redaction, data_minimization, audit, encryption]; clearance: Confidential; description: "LLM support agent with tool access"; }
+service ToolGateway in Backend { controls: [authentication, authorization, audit, input_validation, schema_validation, isolation, rate_limit]; egress_controls: [output_filtering, redaction, data_minimization]; }
+service Summarizer in Backend { controls: [authentication, authorization, audit, redaction, isolation]; egress_controls: [output_filtering, redaction]; clearance: Personal; }
+database CrmDb in DatabaseZone { controls: [authentication, authorization, encryption, audit]; egress_controls: [output_filtering]; }
+database KnowledgeDb in DatabaseZone { controls: [authentication, authorization, encryption]; egress_controls: [output_filtering]; }
+external LlmApi in LlmProvider { description: "hosted language model"; }
+approval Supervisor1 in AdminZone;
+
+assign Customer1 role Customer;
+declassify SummarizeCustomer { data: CustomerRecord; produces: CustomerSummary; via: Summarizer; approval: Supervisor1; }
+
+flow Ask from ChatWidget to ChatApi carries AgentPrompt op Create { channel: tls; step: 1; }
+flow ToAgent from ChatApi to SupportBot carries AgentPrompt op Create { channel: mtls; step: 2; }
+flow ReadKnowledge from KnowledgeDb to SupportBot carries KnowledgeArticle op Read { channel: mtls; }
+flow SummarizeRecord from CrmDb to Summarizer carries CustomerRecord op Transform { channel: mtls; }
+flow SummaryToAgent from Summarizer to ToolGateway carries CustomerSummary op Create { channel: mtls; }
+flow GatewayToAgent from ToolGateway to SupportBot carries CustomerSummary op Read { channel: mtls; }
+flow AskModel from SupportBot to LlmApi carries AgentPrompt op Export { channel: mtls; controls: [redaction, data_minimization, audit, output_filtering, encryption]; }
+flow ModelAnswer from LlmApi to SupportBot carries LlmAnswer op Create { channel: mtls; }
+flow AgentReadsCrm from CrmDb to SupportBot carries CustomerRecord op Read { channel: mtls; }
+
+policy AgentPolicy version "1.0.0" priority 100 scope global {
+  rule AgentReadsKnowledge: allow when subject.role == Agent and data == KnowledgeArticle and action == Read;
+  rule AgentReadsSummary: allow when subject.role == Agent and data == CustomerSummary and action == Read and in_window(AgentActive) obligations [audit];
+  rule AgentPrompts: allow when subject.role == Agent and data == AgentPrompt and action in [Create, Transform, Export] obligations [audit, redact];
+  rule SupervisorAll: allow when subject.role == Supervisor and subject.mfa and zone.kind == AdminZone and subject.device_trust >= 3;
+  rule AgentNeverRawCustomer: deny when subject.role == Agent and data == CustomerRecord reason "agents only see approved summaries" priority 800;
+  rule ExportNeedsHuman: require_approval when action == Export and data.classification >= Confidential;
+  rule EmergencyOverride: allow when subject.role == Supervisor and context.emergency and in_window(Emergency) obligations [audit, require_approval];
+}
+
+assert AgentNoRawCustomerRead: request subject.role == Agent and data == CustomerRecord and action == Read must deny;
+assert PromptExportAudited: action Export must audit;
+assert ToolGatewayAuth: ToolGateway must_have authentication;
+assert NoPersonalToLlm: never data CustomerRecord enters zone LlmProvider;
+constraint AgentFanout: max_fanout AgentPrompt 2;

@@ -1,0 +1,31 @@
+# THREADZERO diagnostics demo — this file is intentionally broken.
+# Open it in the Compiler Playground to see exact line/column diagnostics.
+project "Diagnostics Demo" version "0.1.0";
+
+zone Backend trust 3 kind Backend;
+zone Backend trust 3 kind Backend;
+zone Browzer trust 1 kind Browser max_class Internal;
+zone DatabaseZone trust 4 kind DatabaseZone;
+
+role Support;
+data Card class Financial { zones: [Backend]; operations: [Create, Read]; }
+data CardCopy class Internal { derived_from: [Card]; }
+data Order class Confidential { operations: [Read]; }
+
+service Payments in Backend { controls: [authentication, teleportation]; }
+secret ApiKey in Backend { value: "sk_live_51H8xxxxxxxxxxxxxxxxxxxxxxxxx"; }
+database CardDb in DatabaseZone;
+user Shopper in Browzer;
+
+flow Save from Payments to CardDb carries Card op Delete;
+flow Loop from Payments to Payments carries Card op Read;
+flow Leak from Payments to Shopper carries Order op Read;
+flow Typo from Paymants to CardDb carries Card op Read;
+
+policy A extends B { rule R1: allow when action == Write and data == Order; }
+policy B extends A { rule R2: deny when zone.kind == Nowhere; }
+policy C { rule R3: allow when data == Order and data == Card and action == Read; rule R4: deny when zone.trust == Backend; }
+
+constraint NoBrowserFlow: no_flow Backend Browzer;
+assert Broken: never data Cardd enters zone Backend;
+zone Oops trust 9 kind Browser

@@ -1,0 +1,98 @@
+# THREADZERO example 1 — Secure API Architecture
+# A public API in front of an account service and a database. Trust zones, typed data,
+# RBAC+ABAC policies, assertions and constraints are all compiled to WASM guards.
+project "Secure API Architecture" version "1.0.0" timezone "UTC";
+
+zone Browser trust 1 kind Browser max_class Personal;
+zone Backend trust 3 kind Backend;
+zone DatabaseZone trust 4 kind DatabaseZone;
+zone SecretZone trust 5 kind SecretZone;
+zone AdminZone trust 3 kind AdminZone;
+
+role Customer;
+role Support;
+role Admin;
+role PolicyAuthor;
+role PolicyApprover;
+env prod;
+env staging;
+location Office;
+location Remote;
+
+window BusinessHours { days: weekdays; from: 09:00; to: 17:00; kind: open; label: "Support desk hours"; }
+
+data PublicCatalog class Public { owner: "Marketing"; operations: [Read]; export: allow; }
+data Profile class Personal {
+  owner: "Accounts";
+  zones: [Browser, Backend, DatabaseZone, AdminZone];
+  operations: [Create, Read, Write, Delete, Export, Log];
+  retention: 365d;
+  encryption: required;
+  logging: redacted;
+  export: approval;
+}
+data DbPassword class Secret { owner: "Platform"; operations: [Read]; logging: forbidden; encryption: required; retention: 30d; }
+
+user Customer1 in Browser;
+application WebApp in Browser { controls: [encryption]; }
+api PublicApi in Backend {
+  controls: [authentication, authorization, rate_limit, schema_validation, input_validation, audit];
+  owner: "API team";
+}
+service AccountService in Backend { controls: [authentication, authorization, audit, isolation]; clearance: Secret; }
+database AccountDb in DatabaseZone {
+  controls: [authentication, authorization, encryption, audit];
+  egress_controls: [output_filtering];
+}
+secret DbCredential in SecretZone { reference: "vault://kv/accounts/db"; provider: "vault"; egress_controls: [output_filtering]; }
+application AdminConsole in AdminZone { controls: [authentication, authorization, audit]; }
+identity Dana in AdminZone;
+identity Eli in AdminZone;
+
+assign Customer1 role Customer;
+assign Dana role PolicyAuthor;
+assign Eli role PolicyApprover;
+
+flow Browse from Customer1 to WebApp carries PublicCatalog op Read { channel: internal; }
+flow SubmitProfile from WebApp to PublicApi carries Profile op Create { channel: tls; step: 1; version: 2; }
+flow ForwardProfile from PublicApi to AccountService carries Profile op Write { channel: mtls; step: 2; }
+flow PersistProfile from AccountService to AccountDb carries Profile op Write { channel: mtls; step: 3; }
+flow ReadProfile from AccountDb to AccountService carries Profile op Read { channel: mtls; }
+flow LoadSecret from DbCredential to AccountService carries DbPassword op Read { channel: mtls; controls: [audit]; }
+flow AdminRead from AccountDb to AdminConsole carries Profile op Read { channel: mtls; }
+
+policy BaselineAccess version "1.0.0" priority 100 scope global {
+  rule PublicCatalogRead: allow when data == PublicCatalog and action == Read reason "the catalog is public";
+  rule CustomerOwnProfile: allow when subject.role == Customer and data == Profile and action in [Read, Write, Create]
+      and context.tenant_match and subject.mfa reason "customers manage only their own profile";
+  rule SupportReadsProfile: allow when subject.role == Support and data == Profile and action == Read
+      and in_window(BusinessHours) obligations [audit, redact] reason "support reads profiles during desk hours";
+  rule AdminFromAdminZone: allow when subject.role == Admin and subject.mfa and zone.kind == AdminZone and subject.device_trust >= 3;
+}
+
+policy Guardrails version "1.2.0" priority 900 scope global {
+  rule RestrictedOnlyInTrustedZones: deny when data.classification >= Restricted and zone.trust < 3
+      reason "Restricted data may only be processed in trusted zones";
+  rule SecretsNeverLogged: deny when action == Log and data.classification >= Credential obligations [audit]
+      reason "secrets are never written to logs";
+  rule ApiWritesNeedMfa: require_mfa when resource == PublicApi and action in [Write, Create, Delete];
+  rule ExportNeedsApproval: require_approval when action == Export and data.classification >= Confidential;
+}
+
+policy SupportLimits version "1.0.0" priority 100 scope zone AdminZone {
+  rule SupportNeverDeletes: deny when subject.role == Support and action == Delete reason "support cannot delete data";
+}
+
+separation PolicyDuties { roles: [PolicyAuthor, PolicyApprover]; }
+
+assert ProfileNeverInBrowserLogs: never data Profile op Log;
+assert ApiAuthenticated: PublicApi must_have authentication;
+assert NoDirectDbWrite: PublicApi must_not Write AccountDb;
+assert ExportsAudited: action Export must audit;
+assert SecureCrossings: all flows must secure_channel;
+assert SecretsNeverLogged: never class Secret op Log;
+assert AnonymousCannotDelete: request not subject.mfa and zone.kind == PublicInternet and action == Delete must deny;
+
+constraint DbNeedsAuth: require_control authentication on Backend -> DatabaseZone;
+constraint LimitedFanout: max_fanout Profile 3;
+constraint AcyclicPolicies: acyclic_policies;
