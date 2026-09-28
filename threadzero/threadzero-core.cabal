@@ -1,0 +1,33 @@
+cabal-version:      2.4
+name:               threadzero-core
+version:            1.0.0
+synopsis:           THREADZERO Trust-Boundary Compiler — formal security model core (Haskell)
+license:            MIT
+build-type:         Simple
+
+common shared
+    default-language: Haskell2010
+    ghc-options:      -O1 -Wall -Wno-name-shadowing -Wno-unused-imports -Wno-unused-matches -Wno-unused-top-binds -Wno-incomplete-patterns -Wno-incomplete-uni-patterns -Wno-missing-signatures
+    -- only GHC boot libraries: no Hackage downloads are required
+    build-depends:    base >=4.16 && <5, containers
+
+library
+    import:           shared
+    hs-source-dirs:   haskell/src
+    exposed-modules:  TZ.Json, TZ.Types, TZ.Lexer, TZ.Template, TZ.Parser, TZ.Pretty, TZ.Expr, TZ.Solver,
+                      TZ.Policy, TZ.Semantic, TZ.Analyzer, TZ.Refactor, TZ.Ast
+
+executable threadzero-core
+    import:           shared
+    hs-source-dirs:   haskell/app, haskell/src
+    main-is:          Main.hs
+    other-modules:    TZ.Json, TZ.Types, TZ.Lexer, TZ.Template, TZ.Parser, TZ.Pretty, TZ.Expr, TZ.Solver,
+                      TZ.Policy, TZ.Semantic, TZ.Analyzer, TZ.Refactor, TZ.Ast
+
+test-suite spec
+    import:           shared
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   haskell/test, haskell/src
+    main-is:          Spec.hs
+    other-modules:    TZ.Json, TZ.Types, TZ.Lexer, TZ.Template, TZ.Parser, TZ.Pretty, TZ.Expr, TZ.Solver,
+                      TZ.Policy, TZ.Semantic, TZ.Analyzer, TZ.Refactor, TZ.Ast
